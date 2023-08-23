@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15.4-alpine
+    restart: always
+    networks:
+      - "postgres"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD="${PG_ADM_PASS}"
+    ports:
+      - '5432:5432'
+
+    volumes:
+      - type: bind
+        source: /mount/willusb/pgdata
+        target: /var/lib/postgresql/data
+    deploy:
+      placement:
+        constraints: [node.labels.postgres==true]
+    
+  adminer:
+      image: adminer
+      networks:
+        - "postgres"
+        - "traefik_external"
+      restart: always
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.whoami.rule=Host(`adminer.akselerasjon.no`)"
+        - "traefik.http.routers.whoami.entrypoints=websecure"
+        - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+        - "traefik.http.middlewares.auth.basicauth.users=user:${BASIC_AUTH_PW}"
+
+
+networks:
+  postgres:
+  traefik_external:
+    external: true
+	
+volumes:
+  postgres:
