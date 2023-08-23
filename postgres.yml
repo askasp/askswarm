@@ -37,6 +37,5 @@ networks:
   postgres:
   traefik_external:
     external: true
-	
 volumes:
   postgres:
