@@ -23,7 +23,7 @@ services:
       image: adminer
       networks:
         - "postgres"
-        - "traefik_external"
+        - "ingress_traefik_external"
       restart: always
       labels:
         - "traefik.enable=true"
@@ -35,7 +35,7 @@ services:
 
 networks:
   postgres:
-  traefik_external:
+  ingress_traefik_external:
     external: true
 volumes:
   postgres:
