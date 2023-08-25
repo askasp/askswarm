@@ -1,20 +1,16 @@
 version: '3'
 services:
-  netdata:
-    image: netdata/netdata
-    pid: host
-    network_mode: host
+ netdata:
+    image: netdata/netdata:stable
+    ports:
+      - 19999:19999
     restart: unless-stopped
     cap_add:
       - SYS_PTRACE
-      - SYS_ADMIN
     security_opt:
       - apparmor:unconfined
     volumes:
-      - type: bind
-        source: ./netdataconfig
-        target: /etc/netdata
-      
+      - netdataconfig:/etc/netdata
       - netdatalib:/var/lib/netdata
       - netdatacache:/var/cache/netdata
       - /etc/passwd:/host/etc/passwd:ro
@@ -22,7 +18,10 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /etc/os-release:/host/etc/os-release:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/hostname:/etc/hostname:ro
+    deploy:
+      mode: global
+    
 
     networks:
       - "ingress_traefik_external"
@@ -33,13 +32,9 @@ services:
       - "traefik.http.routers.netdata.tls.certresolver=myresolver"
       - "traefik.http.services.web.loadbalancer.server.port=19999"
 
-    deploy:
-      placement:
-        constraints: [node.role==manager]
-
-
 
 volumes:
+  netdataconig:
   netdatalib:
   netdatacache:
 networks:
