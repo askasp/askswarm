@@ -1,0 +1,23 @@
+version: '3.8'
+services:    
+  web:
+      image: ghcr.io/askasp/unified-health:latest-arm64
+      env_file:
+      - .env
+      networks:
+        - "postgres"
+        - "ingress_traefik_external"
+      restart: always
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.web.rule=Host(`uh.akselerasjon.no`)"
+        - "traefik.http.routers.web.entrypoints=websecure"
+        - "traefik.http.routers.web.tls.certresolver=myresolver"
+        - "traefik.http.services.web.loadbalancer.server.port=3000"
+
+
+networks:
+  postgres:
+    external: true
+  ingress_traefik_external:
+    external: true

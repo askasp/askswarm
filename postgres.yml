@@ -27,9 +27,10 @@ services:
       restart: always
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.whoami.rule=Host(`adminer.akselerasjon.no`)"
-        - "traefik.http.routers.whoami.entrypoints=websecure"
-        - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+        - "traefik.http.routers.adminer.rule=Host(`adminer.akselerasjon.no`)"
+        - "traefik.http.routers.adminer.entrypoints=websecure"
+        - "traefik.http.routers.adminer.tls.certresolver=myresolver"
+        - "traefik.http.services.adminer.loadbalancer.server.port=8080"
         - "traefik.http.middlewares.auth.basicauth.users=user:${BASIC_AUTH_PW}"
 
 
