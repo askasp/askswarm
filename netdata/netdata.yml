@@ -34,7 +34,7 @@ services:
 
 
 volumes:
-  netdataconig:
+  netdataconfig:
   netdatalib:
   netdatacache:
 networks:
