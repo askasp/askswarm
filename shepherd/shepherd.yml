@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  app:
+    image: mazzolino/shepherd
+    environment:
+      SLEEP_TIME: '1m'
+      FILTER_SERVICES: 'name=unified_health_web'
+      IGNORELIST_SERVICES: 'postgres_db postgres_adminer ingress_traefik'
+      VERBOSE: 'true'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+        - node.role == manager
