@@ -4,7 +4,7 @@ services:
     image: postgres:15.4-alpine
     restart: always
     networks:
-      - "postgres"
+      - "network"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD="${PG_ADM_PASS}"
@@ -22,7 +22,7 @@ services:
   adminer:
       image: adminer
       networks:
-        - "postgres"
+        - "network"
         - "ingress_traefik_external"
       restart: always
       labels:
@@ -35,7 +35,7 @@ services:
 
 
 networks:
-  postgres:
+  network:
   ingress_traefik_external:
     external: true
 volumes:
