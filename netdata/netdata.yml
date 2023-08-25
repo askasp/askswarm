@@ -2,7 +2,6 @@ version: '3'
 services:
   netdata:
     image: netdata/netdata
-    container_name: netdata
     pid: host
     network_mode: host
     restart: unless-stopped
@@ -23,7 +22,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
     networks:
-      - "traefik_external"
+      - "ingress_traefik_external"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.netdata.rule=Host(`netdata.akselerasjon.no`)"
@@ -36,5 +35,5 @@ volumes:
   netdatalib:
   netdatacache:
 networks:
-  traefik_external:
+  ingres__traefik_external:
     external: true
