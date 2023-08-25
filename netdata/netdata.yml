@@ -35,5 +35,5 @@ volumes:
   netdatalib:
   netdatacache:
 networks:
-  ingres__traefik_external:
+  ingress_traefik_external:
     external: true
