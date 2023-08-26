@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_TYPE: postgresql
+      APP_SECRET: ${APP_SECRET}
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_PW}"
+      - "traefik.http.routers.http_traefik.middlewares=https_redirect"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.web.rule=Host(`umami.akselerasjon.no`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
+      - "traefik.http.services.web.loadbalancer.server.port=3000"
+
