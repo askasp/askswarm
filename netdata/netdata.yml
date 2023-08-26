@@ -1,9 +1,7 @@
 version: '3'
 services:
  netdata:
-    image: netdata/netdata:stable
-    ports:
-      - 19999:19999
+    image: netdata/netdata
     restart: unless-stopped
     cap_add:
       - SYS_PTRACE
@@ -19,8 +17,11 @@ services:
       - /sys:/host/sys:ro
       - /etc/os-release:/host/etc/os-release:ro
       - /etc/hostname:/etc/hostname:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
     deploy:
-      mode: global
+      placement:
+        constraints: [node.role==manager]
     
 
     networks:
