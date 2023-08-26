@@ -2,6 +2,11 @@ version: '3'
 services:
   web:
     image: ghcr.io/umami-software/umami:postgresql-latest
+
+    networks:
+      - "postgres_network"
+      - "ingress_traefik_external"
+
     environment:
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_TYPE: postgresql
@@ -18,3 +23,9 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.services.web.loadbalancer.server.port=3000"
 
+
+networks:
+  postgres_network:
+    external: true
+  ingress_traefik_external:
+    external: true
