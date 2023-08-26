@@ -70,4 +70,4 @@ services:
 
 
 networks:
-  - "traefik_external"
+"traefik_external":
