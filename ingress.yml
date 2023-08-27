@@ -31,7 +31,7 @@ services:
       - "./letsencrypt:/letsencrypt"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_PW}"
+      # - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_PW}"
       - "traefik.http.routers.http_traefik.middlewares=https_redirect"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
@@ -39,7 +39,7 @@ services:
       - "traefik.http.routers.dashboard.rule=Host(`traefik.akselerasjon.no`)"
       - "traefik.http.routers.dashboard.service=dashboard@internal"
       - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
-      - "traefik.http.routers.dahsboard.middlewares=auth"
+      # - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.routers.dashboard.tls=true"
 
 
