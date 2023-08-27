@@ -11,17 +11,17 @@ services:
         - .env
       
       deploy: 
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.unified_health.rule=Host(`uh.akselerasjon.no`)"
+          - "traefik.http.routers.unified_health.entrypoints=websecure"
+          - "traefik.http.routers.unified_health.tls.certresolver=myresolver"
+          - "traefik.http.services.unified_health.loadbalancer.server.port=3000"
         placement:      
           constraints:
             - node.labels.worker == true
 
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.unified_health.rule=Host(`uh.akselerasjon.no`)"
-        - "traefik.http.routers.unified_health.entrypoints=websecure"
-        - "traefik.http.routers.unified_health.tls.certresolver=myresolver"
-        - "traefik.http.services.unified_health.loadbalancer.server.port=3000"
-
+      
   db:
       image: postgres:15-alpine
       env_file:

@@ -16,13 +16,13 @@ services:
     networks:
       - "net"
       - "ingress_traefik_external"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.akselerasjon.no`)"
-      - "traefik.http.routers.swarmpit.entrypoints=websecure"
-      - "traefik.http.routers.swarmpit.tls.certresolver=myresolver"
-      - "traefik.http.services.swarmpit.loadbalancer.server.port=8080"      
     deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.akselerasjon.no`)"
+        - "traefik.http.routers.swarmpit.entrypoints=websecure"
+        - "traefik.http.routers.swarmpit.tls.certresolver=myresolver"
+        - "traefik.http.services.swarmpit.loadbalancer.server.port=8080"      
       resources:
         limits:
           cpus: '0.50'
@@ -35,7 +35,7 @@ services:
           - node.labels.role == manager
 
   db:
-    image: treehouses/couchdb:2.3.1
+    image: couchdb:2.3.0   
     volumes:
       - type: bind
         source: /media/willusb/swarmpit/couchdbdata
@@ -59,7 +59,7 @@ services:
     
       - type: bind
         source: /media/willusb/swarmpit/influx-data
-        target: /opt/lib/influxdb
+        target: /opt/li/influxdb
     networks:
       - "net"
     deploy:

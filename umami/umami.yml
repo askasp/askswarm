@@ -7,14 +7,15 @@ services:
       - "net"
       - "ingress_traefik_external"
 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.umami.rule=Host(`umami.akselerasjon.no`)"
-      - "traefik.http.routers.umami.entrypoints=websecure"
-      - "traefik.http.routers.umami.tls.certresolver=myresolver"
-      - "traefik.http.services.umami.loadbalancer.server.port=3000"
       
     deploy: 
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.umami.rule=Host(`umami.akselerasjon.no`)"
+        - "traefik.http.routers.umami.entrypoints=websecure"
+        - "traefik.http.routers.umami.tls.certresolver=myresolver"
+        - "traefik.http.services.umami.loadbalancer.server.port=3000"
+
       placement:      
         constraints:
           - node.labels.worker == true
