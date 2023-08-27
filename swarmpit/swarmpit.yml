@@ -32,7 +32,7 @@ services:
           memory: 512M          
       placement:
         constraints:
-          - node.role == manager
+          - node.labels.role == manager
 
   db:
     image: couchdb:2.3.0   
