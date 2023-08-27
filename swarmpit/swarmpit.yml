@@ -17,7 +17,7 @@ services:
     networks:
       - "net"
       - "ingress_traefik_external"
-   labels:
+    labels:
       - "traefik.enable=true"
       - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.akselerasjon.no`)"
       - "traefik.http.routers.swarmpit.entrypoints=websecure"
