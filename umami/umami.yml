@@ -5,6 +5,7 @@ services:
 
     networks:
       - "net"
+      - "ingress_traefik_external"
 
     labels:
       - "traefik.enable=true"
@@ -51,3 +52,5 @@ volumes:
 
 networks:
   net:
+  ingress_traefik_external:
+    external: true
