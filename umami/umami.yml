@@ -1,8 +1,7 @@
 version: '3'
 services:
   web:
-    image: elestio/umami
-
+    image: samdze/umami
     networks:
       - "net"
       - "ingress_traefik_external"
