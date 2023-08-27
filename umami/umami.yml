@@ -23,7 +23,7 @@ services:
       DATABASE_TYPE: postgresql
       APP_SECRET: random_string_secret
     depends_on:
-      db:
+      - db:
         condition: service_healthy
     restart: always
   db:
