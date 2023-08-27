@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: samdze/umami
+    image: ghcr.io/askasp/umami:latest-arm64
     networks:
       - "net"
       - "ingress_traefik_external"
