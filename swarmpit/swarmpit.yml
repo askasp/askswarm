@@ -16,8 +16,7 @@ services:
       retries: 3
     networks:
       - net
-      - ingress_traefik_external
-      
+      - ingress_traefik_external      
    labels:
       - "traefik.enable=true"
       - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.akselerasjon.no`)"
