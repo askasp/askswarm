@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.akselerasjon.no`)"
       - "traefik.http.routers.swarmpit.entrypoints=websecure"
       - "traefik.http.routers.swarmpit.tls.certresolver=myresolver"
-      - "traefik.http.services.swarmpit.loadbalancer.server.port=8080"
+      - "traefik.http.services.swarmpit.loadbalancer.server.port=8080"      
     deploy:
       resources:
         limits:
@@ -29,7 +29,7 @@ services:
           memory: 1024M
         reservations:
           cpus: '0.25'
-          memory: 512M
+          memory: 512M          
       placement:
         constraints:
           - node.role == manager
@@ -50,7 +50,7 @@ services:
         reservations:
           cpus: '0.15'
           memory: 128M
-    placement:      
+      placement:      
         constraints:
           - node.role == persistent_storage_1
 
@@ -71,7 +71,7 @@ services:
         reservations:
           cpus: '0.30'
           memory: 128M
-    placement:      
+      placement:      
         constraints:
           - node.role == persistent_storage_1
 
