@@ -15,8 +15,8 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - net
-      - ingress_traefik_external      
+      - "net"
+      - "ingress_traefik_external"
    labels:
       - "traefik.enable=true"
       - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.akselerasjon.no`)"
@@ -42,7 +42,7 @@ services:
         source: /media/willusb/swarmpit/couchdbdata
         target: /opt/couchdb/data
     networks:
-      - net
+      - "net"
     deploy:
       resources:
         limits:
@@ -63,7 +63,7 @@ services:
         source: /media/willusb/swarmpit/influx-data
         target: /opt/liv/influxdb
     networks:
-      - net
+      - "net"
     deploy:
       resources:
         limits:
@@ -83,7 +83,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - net
+      - "net"
     deploy:
       mode: global
       labels:
