@@ -59,7 +59,7 @@ services:
     
       - type: bind
         source: /media/willusb/swarmpit/influx-data
-        target: /opt/liv/influxdb
+        target: /opt/lib/influxdb
     networks:
       - "net"
     deploy:
