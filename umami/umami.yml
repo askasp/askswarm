@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: ghcr.io/umami-software/umami:postgresql-latest
+    image: elestio/umami
 
     networks:
       - "net"
