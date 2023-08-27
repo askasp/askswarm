@@ -11,6 +11,7 @@ services:
       - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.swarmMode=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
@@ -70,4 +71,4 @@ services:
 
 
 networks:
-"traefik_external":
+  "traefik_external":

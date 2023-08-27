@@ -47,8 +47,6 @@ volumes:
   umami-db-data:
 
 
-
-
 networks:
   net:
   ingress_traefik_external:
