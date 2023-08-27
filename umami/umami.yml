@@ -22,9 +22,6 @@ services:
       DATABASE_URL: postgresql://umami:umami@db:5432/umami
       DATABASE_TYPE: postgresql
       APP_SECRET: random_string_secret
-    depends_on:
-      - db:
-        condition: service_healthy
     restart: always
   db:
     image: postgres:15-alpine
