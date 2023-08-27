@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb:10.11
+    command: --max-allowed-packet=64MB
+    restart: always
+    volumes:
+      - type: bind
+        source: /media/willusb/matomo-data
+        target: /var/lib/mysql:Z     
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MARIADB_AUTO_UPGRADE=1
+      - MARIADB_DISABLE_UPGRADE_BACKUP=1
+    env_file:
+      - ./db.env
+    deploy: 
+      placement:      
+        constraints:
+          - node.labels.role == persistent_storage_1
+
+  app:
+    image: arm64v8/matomo
+    restart: always
+    deploy: 
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.matomo.rule=Host(`matomo.akselerasjon.no`)"
+        - "traefik.http.routers.matomo.entrypoints=websecure"
+        - "traefik.http.routers.matomo.tls.certresolver=myresolver"
+        - "traefik.http.services.matomo.loadbalancer.server.port=80"
+
+      placement:      
+        constraints:
+          - node.labels.worker == true
+    volumes:
+#     - ./config:/var/www/html/config:z
+#     - ./logs:/var/www/html/logs:z
+      - matomo:/var/www/html:z
+    environment:
+      - MATOMO_DATABASE_HOST=db
+    env_file:
+      - ./db.env
+
+volumes:
+  matomo:
