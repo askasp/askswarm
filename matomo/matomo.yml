@@ -5,6 +5,9 @@ services:
     image: mariadb:10.11
     command: --max-allowed-packet=64MB
     restart: always
+    networks:
+    - "net"
+
     volumes:
       - type: bind
         source: /media/willusb/matomo-data
@@ -23,6 +26,9 @@ services:
   app:
     image: arm64v8/matomo
     restart: always
+    networks:
+      - "net"
+      - "ingress_traefik_external"
     deploy: 
       labels:
         - "traefik.enable=true"
@@ -45,3 +51,8 @@ services:
 
 volumes:
   matomo:
+
+networks:
+  net:
+  ingress_traefik_external:
+    external: true
