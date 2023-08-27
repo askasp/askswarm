@@ -53,7 +53,6 @@ services:
       placement:      
         constraints:
           - node.role == persistent_storage_1
-
   influxdb:
     image: influxdb:1.8
     volumes:
