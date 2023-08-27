@@ -2,12 +2,26 @@ version: '3.8'
 services:    
   web:
       image: ghcr.io/askasp/unified-health:latest-arm64
-      env_file:
-      - .env
       networks:
-        - "postgres_network"
+        - "net"
         - "ingress_traefik_external"
       restart: always
+      
+      environment:
+        DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PW}@db:5432/${POSTGRES_DB}?schema=public
+        GITHUB_ID=${GITHUB_ID}
+        GITHUB_SECRET=${GITHUB_SECRET}
+        NEXTAUTH_URL=${NEXTAUTH_URL}
+        NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+        GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+        GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      
+      deploy: 
+        placement:      
+          constraints:
+            - node.labels.worker == true
+      restart: always
+
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.unified_health.rule=Host(`uh.akselerasjon.no`)"
@@ -15,10 +29,37 @@ services:
         - "traefik.http.routers.unified_health.tls.certresolver=myresolver"
         - "traefik.http.services.unified_health.loadbalancer.server.port=3000"
 
+  db:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      networks:
+        - "net"
+      volumes:
+        - type: bind
+          source: /media/willusb/unified-data
+          target: /var/lib/postgresql/data
+        
+      deploy: 
+        placement:      
+          constraints:
+            - node.labels.role == persistent_storage_1
+      restart: always
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+volumes:
+  umami-db-data:
+
+
+
 
 networks:
-  postgres_network:
-    external: true
+  net:
   ingress_traefik_external:
     external: true
 
