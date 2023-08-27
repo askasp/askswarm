@@ -52,7 +52,7 @@ services:
           memory: 128M
       placement:      
         constraints:
-          - node.role == persistent_storage_1
+          - node.labels.role == persistent_storage_1
   influxdb:
     image: influxdb:1.8
     volumes:
@@ -72,7 +72,7 @@ services:
           memory: 128M
       placement:      
         constraints:
-          - node.role == persistent_storage_1
+          - node.labels.role == persistent_storage_1
 
   agent:
     image: swarmpit/agent:latest
