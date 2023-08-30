@@ -30,7 +30,7 @@ services:
         - "net"
       volumes:
         - type: bind
-          source: /media/willusb/unified-data
+          source: /media/willusb/unified-health-data
           target: /var/lib/postgresql/data
         
       deploy: 
